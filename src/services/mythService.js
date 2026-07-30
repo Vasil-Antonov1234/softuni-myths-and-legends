@@ -19,5 +19,9 @@ export default {
 
     async updateOne(parsedData, mythId, userId) {
         return await mythRepisitory.updateOne(parsedData, mythId, userId);
+    },
+
+    async getLatest() {
+        return await mythRepisitory.getLatest();
     }
 }

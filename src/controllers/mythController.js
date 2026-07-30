@@ -121,6 +121,6 @@ mythController.post("/:mythId/edit", isAuthenticated, async (req, res) => {
         const errorMessage = getErrorMessage(error);
         res.status(400).render("myths/edit", { error: errorMessage, myth: mythData });
     };
-})
+});
 
 export default mythController;

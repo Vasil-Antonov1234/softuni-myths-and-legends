@@ -49,5 +49,20 @@ export default {
                 ...parsedData
             }
         });
+    },
+
+    async getLatest() {
+        return prisma.myth.findMany({
+            select: {
+                id: true,
+                name: true,
+                origin: true,
+                image: true
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+            take: 3
+        })
     }
 }
