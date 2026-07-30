@@ -6,6 +6,11 @@ import mythService from "../services/mythService.js";
 
 const mythController = Router();
 
+mythController.get("/report", async (req, res) => {
+
+    res.render("myths/report");
+})
+
 mythController.get("/create", isAuthenticated, async (req, res) => {
     
     res.status(200).render("myths/create");
