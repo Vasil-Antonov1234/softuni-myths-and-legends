@@ -40,4 +40,9 @@ mythController.get("/dashboard", async (req, res) => {
     
 });
 
+mythController.get("/:mythId/details", async (req, res) => {
+
+    res.render("myths/details");
+})
+
 export default mythController;
