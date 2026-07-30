@@ -24,7 +24,12 @@ mythController.post("/create", isAuthenticated, async (req, res) => {
     } catch (error) {
         const errorMessage = getErrorMessage(error);
         res.status(400).render("myths/create", { error: errorMessage, mythData })
-    }
+    };
+});
+
+mythController.get("/dashboard", async (req, res) => {
+
+    res.render("myths/dashboard");
 })
 
 export default mythController;
