@@ -16,6 +16,24 @@ model User {
 	id  		Int			@id 	@default(autoincrement())
 	email		String	@unique
 	password	String
+
+	myths		Myth[]
 	
 	@@map("users")
+}
+
+model Myth {
+	id 			Int		@id		@default(autoincrement())
+	name		String
+	origin		String
+	role		String
+	image		String
+	symbol		String
+	era			String
+	description	String
+
+	ownerId		Int
+	owner		User	@relation(fields: [ownerId], references: [id])
+
+	@@map("myths")
 }
