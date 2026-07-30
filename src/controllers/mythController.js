@@ -51,9 +51,13 @@ mythController.get("/:mythId/details", async (req, res) => {
             return res.status(404).render("404", { error: "Not found" });
         };
 
-        res.status(200).render("myths/details", { myth })
+        const isOwner = myth.ownerId === userId;
+
+        res.status(200).render("myths/details", { myth, isOwner })
     } catch (error) {
         const errorMessage = getErrorMessage(error);
+
+        console.log(errorMessage)
         res.status(404).render("404", { error: errorMessage });
     };
 })
