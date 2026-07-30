@@ -3,7 +3,7 @@ import { Prisma } from "../../generated/prisma/client.ts";
 
 export function getErrorMessage(error) {
     let message = "";
-
+    
     if (error instanceof z.ZodError) {
         const errors = z.flattenError(error).fieldErrors;
         message = Object.values(errors).flat()[0] || "Invalid input data";

@@ -37,5 +37,17 @@ export default {
                 ownerId: userId
             }
         })
+    },
+
+    async updateOne(parsedData, mythId, userId) {
+        return await prisma.myth.update({
+            where: {
+                id: mythId,
+                ownerId: userId
+            },
+            data: {
+                ...parsedData
+            }
+        });
     }
 }
