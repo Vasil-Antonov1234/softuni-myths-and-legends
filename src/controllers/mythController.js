@@ -60,6 +60,26 @@ mythController.get("/:mythId/details", async (req, res) => {
         console.log(errorMessage)
         res.status(404).render("404", { error: errorMessage });
     };
+});
+
+mythController.get("/:mythId/delete", isAuthenticated, async (req, res) => {
+    const mythId = Number(req.params.mythId);
+    const userId = Number(req.user.id);
+
+    try {
+        const myth = await mythService.getById(mythId);
+
+        if (myth.ownerId !== userId) {
+            return res.status(401).render("404", { error: "Unauthorized" });
+        };
+
+        const deletedMyth = await mythService.deleteOne(mythId, userId);
+
+        res.status(200).redirect("/myths/dashboard");
+    } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        res.status(404).render("404", { error: errorMessage });
+    };
 })
 
 export default mythController;

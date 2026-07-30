@@ -11,5 +11,9 @@ export default {
 
     async getById(mythId) {
         return await mythRepisitory.getById(mythId);
+    },
+
+    async deleteOne(mythId, userId) {
+        return await mythRepisitory.deleteOne(mythId, userId);
     }
 }

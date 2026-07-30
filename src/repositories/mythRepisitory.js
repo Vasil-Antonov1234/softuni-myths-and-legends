@@ -28,5 +28,14 @@ export default {
                 id: mythId
             }
         });
+    },
+
+    async deleteOne(mythId, userId) {
+        return await prisma.myth.delete({
+            where: {
+                id: mythId,
+                ownerId: userId
+            }
+        })
     }
 }
