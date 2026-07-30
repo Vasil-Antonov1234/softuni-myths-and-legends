@@ -3,16 +3,25 @@ import { isAuthenticated } from "../middlewares/authMiddleware.js";
 import { createMythSchema } from "../schemas/mythSchema.js";
 import { getErrorMessage } from "../utils/errorUtil.js";
 import mythService from "../services/mythService.js";
+import { convertDate } from "../utils/convertDate.js";
 
 const mythController = Router();
 
 mythController.get("/report", async (req, res) => {
 
-    res.render("myths/report");
+    try {
+        const reportMyths = await mythService.report();
+        const convertedReportMyths = convertDate(reportMyths);
+
+        res.render("myths/report", { convertedReportMyths });
+    } catch (error) {
+        res.render("myths/report", { err });
+    };
+
 })
 
 mythController.get("/create", isAuthenticated, async (req, res) => {
-    
+
     res.status(200).render("myths/create");
 });
 
@@ -33,16 +42,16 @@ mythController.post("/create", isAuthenticated, async (req, res) => {
 });
 
 mythController.get("/dashboard", async (req, res) => {
-    
+
     try {
         const myths = await mythService.getAll()
-    
+
         res.render("myths/dashboard", { myths });
     } catch (error) {
         const errorMessage = getErrorMessage(error);
         res.status(404).render("myths/404", { error: errorMessage });
     };
-    
+
 });
 
 mythController.get("/:mythId/details", async (req, res) => {
@@ -96,13 +105,13 @@ mythController.get("/:mythId/edit", isAuthenticated, async (req, res) => {
         const myth = await mythService.getById(mythId);
 
         if (myth.ownerId !== userId) {
-            return res.status(401).render("404", { error: "Unauthorized"});
+            return res.status(401).render("404", { error: "Unauthorized" });
         };
 
         res.status(200).render("myths/edit", { myth });
     } catch (error) {
         const errorMessage = getErrorMessage(error);
-        res.status(400).render("myths/edit", { error: errorMessage});
+        res.status(400).render("myths/edit", { error: errorMessage });
     };
 });
 
@@ -114,7 +123,7 @@ mythController.post("/:mythId/edit", isAuthenticated, async (req, res) => {
     try {
         const myth = await mythService.getById(mythId);
 
-        if(myth.ownerId !== userId) {
+        if (myth.ownerId !== userId) {
             return res.status(401).render("404", { error: "Unauthorized" });
         };
 
@@ -132,13 +141,13 @@ mythController.post("/:mythId/edit", isAuthenticated, async (req, res) => {
 mythController.get("/:mythId/like", isAuthenticated, async (req, res) => {
     const mythId = Number(req.params.mythId);
     const userId = Number(req.user.id);
-    
+
     try {
         const myth = await mythService.getById(mythId);
 
         const isOwner = myth.ownerId === userId;
 
-        if(isOwner) {
+        if (isOwner) {
             throw new Error("Owners cannot like their own posts");
         };
 
@@ -147,7 +156,7 @@ mythController.get("/:mythId/like", isAuthenticated, async (req, res) => {
         res.status(200).redirect(`/myths/${mythId}/details`);
     } catch (error) {
         const errorMessage = getErrorMessage(error);
-        res.status(400).render("myths/details", { error: errorMessage });        
+        res.status(400).render("myths/details", { error: errorMessage });
     };
 
 
