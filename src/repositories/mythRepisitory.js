@@ -8,5 +8,17 @@ export default {
                 ownerId
             }
         });
+    },
+
+    async getAll() {
+        return await prisma.myth.findMany({
+            select: {
+                image: true,
+                name: true,
+                origin: true,
+                role: true,
+                id: true
+            }
+        })
     }
 }

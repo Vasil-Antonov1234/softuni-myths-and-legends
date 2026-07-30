@@ -28,8 +28,16 @@ mythController.post("/create", isAuthenticated, async (req, res) => {
 });
 
 mythController.get("/dashboard", async (req, res) => {
-
-    res.render("myths/dashboard");
-})
+    
+    try {
+        const myths = await mythService.getAll()
+    
+        res.render("myths/dashboard", { myths });
+    } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        res.status(404).render("myths/404", { error: errorMessage });
+    };
+    
+});
 
 export default mythController;

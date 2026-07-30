@@ -3,52 +3,27 @@
         <h2>Myths and Legends</h2>
         <ul class="card-wrapper">
             <!-- Display a li with information about every post (if any)-->
+            {{#each myths}}
             <li class="card">
-                <img src="./static/images/anubis.webp" />
+                <img src="{{image}}" />
                 <p>
-                    <strong>Name: </strong><span class="name">Anubis</span>
+                    <strong>Name: </strong><span class="name">{{mane}}</span>
                 </p>
                 <p>
-                    <strong>Origin: </strong><span class="origin">Egyptian Mythology</span>
+                    <strong>Origin: </strong><span class="origin">{{origin}}</span>
                 </p>
                 <p>
-                    <strong>Role: </strong><span class="role">God of the Dead </span>
+                    <strong>Role: </strong><span class="role">{{role}}</span>
                 </p>
-                <a class="details-btn" href="#">Details</a>
+                <a class="details-btn" href="/myths/{{id}}/details">Details</a>
             </li>
-
-            <li class="card">
-                <img src="./static/images/thor.webp" />
-                <p>
-                    <strong>Name: </strong><span class="name">Thor</span>
-                </p>
-                <p>
-                    <strong>Origin: </strong><span class="origin">Norse Mythology</span>
-                </p>
-                <p>
-                    <strong>Role: </strong><span class="role">God of Thunder and Storms</span>
-                </p>
-                <a class="details-btn" href="#">Details</a>
-            </li>
-
-            <li class="card">
-                <img src="./static/images/zeus.webp" />
-                <p>
-                    <strong>Name: </strong><span class="name">Zeus</span>
-                </p>
-                <p>
-                    <strong>Origin: </strong><span class="origin">Greek Mythology</span>
-                </p>
-                <p>
-                    <strong>Role: </strong><span class="role">King of the Gods</span>
-                </p>
-                <a class="details-btn" href="#">Details</a>
-            </li>
+            {{else}}
+            <!-- Display an h2 if there are no posts -->
+            <div id="no-post">
+                <h2>There are no myths and legends! </h2>
+            </div>
+            {{/each}}
         </ul>
 
-        <!-- Display an h2 if there are no posts -->
-        <!-- <div id="no-post">
-            <h2>There are no myths and legends! </h2>
-        </div> -->
     </section>
 </main>
