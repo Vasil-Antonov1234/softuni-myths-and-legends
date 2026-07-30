@@ -26,6 +26,9 @@ export default {
         return await prisma.myth.findUnique({
             where: {
                 id: mythId
+            },
+            include: {
+                likeBy: true
             }
         });
     },
@@ -64,5 +67,20 @@ export default {
             },
             take: 3
         })
+    },
+
+    async like(mythId, userId) {
+        return await prisma.myth.update({
+            where: {
+                id: mythId
+            },
+            data: {
+                likeBy: {
+                    connect: {
+                        id: userId
+                    }
+                }
+            }
+        });
     }
 }

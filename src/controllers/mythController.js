@@ -52,8 +52,9 @@ mythController.get("/:mythId/details", async (req, res) => {
         };
 
         const isOwner = myth.ownerId === userId;
+        const hasLiked = myth.likeBy.find((x) => x.id === userId);
 
-        res.status(200).render("myths/details", { myth, isOwner })
+        res.status(200).render("myths/details", { myth, isOwner, hasLiked })
     } catch (error) {
         const errorMessage = getErrorMessage(error);
 
@@ -122,5 +123,29 @@ mythController.post("/:mythId/edit", isAuthenticated, async (req, res) => {
         res.status(400).render("myths/edit", { error: errorMessage, myth: mythData });
     };
 });
+
+mythController.get("/:mythId/like", isAuthenticated, async (req, res) => {
+    const mythId = Number(req.params.mythId);
+    const userId = Number(req.user.id);
+    
+    try {
+        const myth = await mythService.getById(mythId);
+
+        const isOwner = myth.ownerId === userId;
+
+        if(isOwner) {
+            throw new Error("Owners cannot like their own posts");
+        };
+
+        await mythService.like(mythId, userId);
+
+        res.status(200).redirect(`/myths/${mythId}/details`);
+    } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        res.status(400).render("myths/details", { error: errorMessage });        
+    };
+
+
+})
 
 export default mythController;

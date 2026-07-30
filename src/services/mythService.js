@@ -23,5 +23,9 @@ export default {
 
     async getLatest() {
         return await mythRepisitory.getLatest();
+    },
+
+    async like(mythId, userId) {
+        return mythRepisitory.like(mythId, userId);
     }
 }

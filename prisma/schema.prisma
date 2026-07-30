@@ -18,6 +18,7 @@ model User {
 	password	String
 
 	myths		Myth[]
+	likes		Myth[]	@relation("MythsLikes")
 	
 	@@map("users")
 }
@@ -34,6 +35,7 @@ model Myth {
 
 	ownerId		Int
 	owner		User	@relation(fields: [ownerId], references: [id])
+	likeBy		User[]	@relation("MythsLikes")
 
 	createdAt	DateTime	@default(now())
 	updatedAt	DateTime	@updatedAt

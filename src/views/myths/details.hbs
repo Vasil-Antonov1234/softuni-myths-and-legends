@@ -40,9 +40,10 @@
                 {{#if isOwner}}
                 <a href="/myths/{{myth.id}}/edit" id="edit-btn">Edit</a>
                 <a href="/myths/{{myth.id}}/delete" id="delete-btn">Delete</a>
-                {{else}}
-                <a href="#" id="like-btn">Like</a>
+                {{else if hasLiked}}
                 <p id="already-liked">You've already liked this legend!</p>
+                {{else}}
+                <a href="/myths/{{myth.id}}/like" id="like-btn">Like</a>
                 {{/if}}
             </div>
             {{/if}}
