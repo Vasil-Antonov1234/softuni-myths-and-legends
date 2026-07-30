@@ -20,5 +20,13 @@ export default {
                 id: true
             }
         })
+    },
+
+    async getById(mythId) {
+        return await prisma.myth.findUnique({
+            where: {
+                id: mythId
+            }
+        });
     }
 }

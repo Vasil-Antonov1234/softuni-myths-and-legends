@@ -7,5 +7,9 @@ export default {
 
     async getAll() {
         return await mythRepisitory.getAll();
+    },
+
+    async getById(mythId) {
+        return await mythRepisitory.getById(mythId);
     }
 }

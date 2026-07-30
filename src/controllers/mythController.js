@@ -41,8 +41,21 @@ mythController.get("/dashboard", async (req, res) => {
 });
 
 mythController.get("/:mythId/details", async (req, res) => {
+    const mythId = Number(req.params.mythId);
+    const userId = Number(req.user?.id);
 
-    res.render("myths/details");
+    try {
+        const myth = await mythService.getById(mythId);
+
+        if (!myth) {
+            return res.status(404).render("404", { error: "Not found" });
+        };
+
+        res.status(200).render("myths/details", { myth })
+    } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        res.status(404).render("404", { error: errorMessage });
+    };
 })
 
 export default mythController;
