@@ -82,5 +82,28 @@ export default {
                 }
             }
         });
+    },
+
+    async report() {
+        return await prisma.myth.findMany({
+            select: {
+                name: true,
+                origin: true,
+                role: true,
+                symbol: true,
+                era: true,
+                image: true,
+                owner: {
+                    select: {
+                        email: true
+                    }
+                },
+                createdAt: true
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+            take: 3
+        });
     }
 }

@@ -27,5 +27,9 @@ export default {
 
     async like(mythId, userId) {
         return mythRepisitory.like(mythId, userId);
+    },
+
+    async report() {
+        return await mythRepisitory.report();
     }
 }
