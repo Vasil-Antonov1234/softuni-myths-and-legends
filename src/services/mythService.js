@@ -1,5 +1,7 @@
+import mythRepisitory from "../repositories/mythRepisitory.js"
+
 export default {
-    async getById(mythId) {
-        return await
+    async create(parsedData, ownerId) {
+        return await mythRepisitory.create(parsedData, ownerId);
     }
 }
